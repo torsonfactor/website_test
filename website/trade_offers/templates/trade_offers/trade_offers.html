@@ -1,0 +1,25 @@
+{% extends 'mainapp/output/output.html' %}
+
+{% block title %}
+    At Trade Offers (Welcome to the Scott Wattsom)
+{% endblock %}
+
+{% block content %}
+    <div id="trade_offers">
+        {% if offer_ob %}
+            {% for element in offer_ob %}
+                <h1>{{element.title}}</h1>
+                <p>{{element.person_info}}</p>
+                <p>{{element.person_email}}</p>
+                <p>{{element.full_text}}</p>
+                <p>{{element.date}}</p>
+            {% endfor %}
+        {% else %}
+            <p>У вас нет записей</p>
+        {% endif %}
+    </div>
+
+    <div id="trade_offers_button">
+        <a href="{% url 'trade_offers_create' %}"><button class="btn btn-info"><i class="fas fa-phone-volume"></i>Добавить своё торговое предложение</button></a>
+    </div>
+{% endblock %}

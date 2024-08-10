@@ -1,0 +1,31 @@
+{% extends 'mainapp/output/output.html' %}
+
+{% block content %}
+    <div id="list_brand">
+        <div id="first_literally_brands_all">
+            {% for element in first_literally_brands_all %}
+                <a href="#{{ element }}">{{element}}.</a>
+            {% endfor %}
+        </div>
+        <div id="brands_brands_all">
+            {% for first_literally, brand_array in first_literally_brands_all.items %}
+            <div id="catalog_brands">
+                <a id="{{first_literally}}">#{{first_literally}}</a><br>
+                {% for element in brand_array %}
+                    <a href="{{element.get_absolute_url}}">{{element}}</a><br>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+            <style>
+                .container{
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    max-width: 100%;
+                    padding-left: 15%;
+                    padding-right: 15%;
+                }
+            </style>
+{% endblock %}

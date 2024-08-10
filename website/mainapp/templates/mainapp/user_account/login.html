@@ -1,0 +1,40 @@
+{% extends 'mainapp/output/output.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="row" style="margin: auto;">
+        <div class="col-md-6 offset-md-3" id="login_in">
+            <h3 class="text-center">Авторизация</h3>
+            <hr>
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="form-button" style="width: 100%; display: flex; justify-content: center;">
+                    <input type="submit" class="btn btn-success btn-block" style="width: 50%;" value="Войти">
+                    <input type="" class="btn btn-success btn-block" style="width: 50%;" onclick="location.href='{% url 'registration' %}';" value="Регистрация">
+                </div>
+            </form>
+        </div>
+    </div>
+    <style>
+        #background{
+            position: relative;
+            top: 4vw;
+            height: 500px;
+
+            /*position: relative;
+            top: calc(5*(1vw + 0.5vh));
+            height: 500px;*/
+        }
+        .container{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            max-width: 100%;
+            padding-left: 15%;
+            padding-right: 15%;
+        }
+    </style>
+
+{% endblock content %}

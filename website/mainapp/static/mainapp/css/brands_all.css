@@ -1,0 +1,21 @@
+#first_literally_brands_all{
+    text-align: center;
+}
+
+#brands_brands_all{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#catalog_brands{
+    margin: 2%;
+}
+
+#list_brand a{
+    text-decoration: none;
+    color: black;
+}
+
+#list_brand a:hover{
+    text-decoration: underline red;
+}

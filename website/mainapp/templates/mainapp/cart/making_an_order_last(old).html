@@ -1,0 +1,65 @@
+{% extends 'mainapp/output/output.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h5 class="text-center mt-5 mb-5">Офорление заказа</h5>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger fade show" role="alert" style="width: 85%; margin: auto;">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <table class="table text-center" style="width: 85%; margin: auto;">
+      <thead>
+        <tr>
+          <th scope="col">Наименование</th>
+          <th scope="col">Изображение </th>
+          <th scope="col">Цена </th>
+          <th scope="col">Кол-во</th>
+          <th scope="col">Размер</th>
+          <th scope="col">Общая цена</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.products.all %}
+        <tr>
+          <th scope="row">{{ item.content_object.title }}</th>
+          <td class="w-25"><img src="{{ item.content_object.photo.url }}" class="img-fluid" style="max-width: 70%; height: auto; border-radius: 15px;"></td>
+          <td>
+              {% if item.content_object.discount %}
+                  <strong>
+                      {{item.content_object.sale_price}} руб.
+                  </strong>
+                  <a style="text-decoration: line-through;">
+                      {{item.content_object.price}} руб.
+                  </a>
+              {% else %}
+                  {{ item.content_object.price }} руб.
+              {% endif %}
+          </td>
+          <td>{{ item.qty }}</td>
+          <td>{{ item.size }}</td>
+          <td>{{ item.final_price }} руб.</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="2"></td>
+            <td><strong>Итого: </strong></td>
+            <td><strong>{{ cart.total_products }} шт.</strong></td>
+            <td><strong>{{ cart.final_price }} руб.</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="text-center mt-5 mb-5">Форма заказа</h3>
+    <form action="{% url 'make-order' %}" method="POST" style="width: 75%; margin: auto;">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-success btn-block mb-3" value="Оформить заказ">
+    </form>
+
+
+{% endblock content %}

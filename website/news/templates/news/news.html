@@ -1,0 +1,23 @@
+{% extends 'mainapp/output/output.html' %}
+
+{% block title %}
+    At News (Welcome to the Scott Wattsom)
+{% endblock %}
+
+{% block content %}
+    <div class="contentmain">
+    {% if news %}
+        {% for element in news %}
+                <p>{{element.title}}</p>
+                <p>{{element.anons}}</p>
+                <p>{{element.full_text}}</p>
+                <p>{{element.date}}</p>
+        {% endfor %}
+    {% else %}
+        <p>У вас нет записей</p>
+    {% endif %}
+    </div>
+    <!--<div id="newsmainbutton">
+        <button class="btn btn-info">Добавить Новость</button>
+    </div>-->
+{% endblock %}

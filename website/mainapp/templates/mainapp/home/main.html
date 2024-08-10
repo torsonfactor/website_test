@@ -1,0 +1,131 @@
+{% extends 'mainapp/output/output.html' %}
+
+{% block title %}
+    At Home (Welcome to the Scott Wattsom)
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModal" aria-hidden="false">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="orderDetailsLabel-{{ order.id }}">
+                                    <strong>Ожидайте, скоро с Вами свяжется наш менеджер для подтверждения заказа</strong>
+                                </h5>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    {% for message in messages %}
+                                        {% for i in message.message %}
+                                            {{i}}
+                                        {% endfor %}
+                                    </br>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="justify-content: space-between;">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    Закрыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    {% endif %}
+    {% if selected_brand1 %}
+        <div id="previews_brands" style='background-image: url("{{selected_brand1.photo_background.url}}");'>
+            <div id="image_correct">
+                <div class="col-md-4" id="image_correct_fake">
+                    <div class="image" style="height: 100%;">
+                        <img class="image_product" id="image_product_sidebar" src="{{selected_brand1.photo.url}}" style="height: 100%;">
+                    </div>
+                </div>
+                <div class="info_main">
+                    <p style="color: #f2f2f2;">{{selected_brand1.description}}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div>
+         <p class="names_for_mainpage">Каталог</p>
+    </div>
+    <div id="background_for_sidebar">
+        <div class="row" id="row_sidebar_for_main">
+            {% for element in suggestion %}
+                <div class="col-md-3" onclick="location.href='{{ element.slug }}/';">
+                    <div class="product">
+                        <div class="image">
+                            {% if element.photo %}
+                                <img class="image_product" id="image_product_sidebar" src="{{element.photo.url}}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="info">
+                        <br>
+                        <h1>{{element.name}}</h1><br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if selected_brand2 %}
+        <div id="previews_brands" style='background-image: url("{{selected_brand2.photo_background.url}}");'>
+            <div id="image_correct">
+                <div class="info_main">
+                    <p style="color: #f2f2f2;">{{selected_brand2.description}}</p>
+                </div>
+                <div class="col-md-4" id="image_correct_fake" style="float: right;">
+                    <div class="image" style="height: 100%;">
+                        <img class="image_product" id="image_product_sidebar" src="{{selected_brand2.photo.url}}" style="height: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if month_bestseller %}
+        {% if month_bestseller|length > 1 %}
+            <div>
+                <p class="names_for_mainpage">Самые популярные товары месяца. </p>
+            </div>
+        {% else %}
+            <div>
+                <p class="names_for_mainpage">Самый популярный товар месяца.</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div>
+            <p class="names_for_mainpage">Новинки этого месяца</p>
+        </div>
+    {% endif %}
+    <!-- можно вписать готовый слайдер -->
+    {% if month_bestseller %}
+        {% include 'mainapp/brand/slider_popular_product.html' %}
+    {% else %}
+        {% include 'mainapp/brand/slider_for_mainpage.html' %}
+    {% endif %}
+    <div id="fake_1">
+
+    </div>
+    <!--
+    <style>
+        #background_for_sidebar{
+            background-image: url("../static/mainapp/img/background_for_catalog1.jpg");
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+    -->
+{% endblock %}
+
+{% block script %}
+    {% if messages %}
+        <script>
+          $('#myModal').modal("toggle");
+
+          $('#myModal').on('shown.bs.modal', function (event) {
+          });
+        </script>
+    {% endif %}
+{% endblock script%}

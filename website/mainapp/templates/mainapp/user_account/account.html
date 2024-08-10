@@ -1,0 +1,328 @@
+{% extends 'mainapp/output/output.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h4 class="text-center">Личный кабинет</h4>
+    <hr>
+    <div class="row">
+      <div class="col-4" style="width: 20%;">
+        <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Мой профиль</a>
+            <a class="list-group-item list-group-item-action active" id="list-orders-list" data-bs-toggle="list" href="#list-orders" role="tab" aria-controls="list-orders">Заказы</a>
+            <a class="list-group-item list-group-item-action" id="list-wish-list" data-bs-toggle="list" href="#list-wishlist" role="tab" aria-controls="list-wishlist">Избранное</a>
+        </div>
+      </div>
+      <div class="col-8" style="width: 80%; padding-top: 0" >
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+              <div class="row" style="width: 100%; margin: 0">
+                  <div class="col-8" style="width: 75%;">
+                      <div class="tab-content" id="nav-tabContent">
+                          <div class="tab-pane fade show active" id="list-profile-memory" role="tabpanel" aria-labelledby="list-profile-memory-list" style="float: left">
+                              <div class="row" id="row_sidebar" style="margin-top: 0">
+                                  <h1>Памятка покупателя:</h1>
+                                  <p>
+                                      Вы оформляете запрос на покупку, позднее в личном кабинете можно посмотреть ответ на запрос.
+                                      Если в статусе заказа - "одобрено", можно оплачивать заказ, вскоре после оплаты статус изменится на "подтверждено".
+                                      Если в статусе заказа - "отклонено" - то товара нету на складе, заказ автоматически удалится.
+                                  </p>
+                              </div>
+                          </div>
+                          <div class="tab-pane fade" id="list-profile-edit" role="tabpanel" aria-labelledby="list-profile-edit-list" style="width: 100%; float: left; margin: 0;">
+                              <div class="row" id="row_sidebar" style="margin-top: 0">
+                                  <form action="{% url 'account' %}" method="POST">
+                                      {% csrf_token %}
+                                      {{form|crispy}}
+                                      <!--
+                                      <div class="mb-3">
+                                          <label for="id_first_name" class="form-label">Имя</label>
+                                          <input class="form-control" type="text" value="{{first_name}}}" aria-label="Disabled input example" name="first_name">
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="id_last_name" class="form-label">Фамилия</label>
+                                          <input class="form-control" type="text" value="{{last_name}}}" aria-label="Disabled input example" name="last_name">
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="id_adsress" class="form-label">Адрес</label>
+                                          <input class="form-control" type="text" value="{{address}}}" aria-label="Disabled input example" name="address">
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="id_telephone" class="form-label">Телефон</label>
+                                          <input class="form-control" type="text" value="{{telephone}}}" aria-label="Disabled input example" name="telephone">
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="id_email" class="form-label">Почта</label>
+                                          <input class="form-control" type="text" value="{{email}}}" aria-label="Disabled input example" name="email">
+                                      </div>
+                                      -->
+                                      <input type="submit" class="btn btn-danger btn-block mb-3" value="Сохранить">
+                                  </form>
+                              </div>
+                          </div>
+                          <div class="tab-pane fade" id="list-profile-security" role="tabpanel" aria-labelledby="list-profile-security-list" style="width: 100%; float: left; margin: 0;">
+                              <div class="row" id="row_sidebar" style="margin-top: 0">
+                                  <form action="{% url 'login' %}" method="POST" autocomplete="off">
+                                      {% csrf_token %}
+                                      {{ form_replace_password|crispy }}
+                                      <input type="submit" class="btn btn-danger btn-block mb-3" value="Сохранить">
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-4" style="width: 25%;">
+                      <div class="list-group" id="list-tab" role="tablist" style=" float: revert">
+                            <a class="list-group-item list-group-item-action active" id="list-profile_memory-list" data-bs-toggle="list" href="#list-profile-memory" role="tab" aria-controls="list-profile-memory">Памятка покупателя</a>
+                            <a class="list-group-item list-group-item-action" id="list-profile_edit-list" data-bs-toggle="list" href="#list-profile-edit" role="tab" aria-controls="list-profile-edit">Редактировать</a>
+                            <a class="list-group-item list-group-item-action" id="list-profile_security-list" data-bs-toggle="list" href="#list-profile-security" role="tab" aria-controls="list-profile-security">Безопасность</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane fade show active" id="list-orders" role="tabpanel" aria-labelledby="list-orders-list">
+              <table class="table text-center">
+                  {% if customer.orders.all %}
+                      <thead>
+                          <tr>
+                              <th scope="col">Номер заказа</th>
+                              <th scope="col">Статус</th>
+                              <th scope="col">Сумма</th>
+                              <th scope="col">Дата создания</th>
+                              <th scope="col">Информация</th>
+                          </tr>
+                      </thead>
+                      <tbody style="vertical-align: middle;">
+                          {% for order in customer.orders.all %}
+                              <tr>
+                                  <th scope="row">{{ order.id }}</th>
+                                  <td>{{ order.get_status_display }}</td>
+                                  <td>{{ order.cart.final_price }} руб.</td>
+                                  <td>{{ order.created_at }}</td>
+                                  <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderDetails-{{ order.id }}" style="margin-top: 0vh;">Информация о заказе</button></td>
+                                  <div class="modal fade" id="orderDetails-{{ order.id }}" tabindex="-1" aria-labelledby="orderDetailsLabel-{{ order.id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title text-center" id="orderDetailsLabel-{{ order.id }}">
+                                                  Информация о заказе #{{ order.id }} - Станица 1
+                                              </h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              <div class="row">
+                                                  <div class="col-md-3 text-center mb-2">
+                                                      <strong>Бренд/Товар</strong>
+                                                  </div>
+                                                  <div class="col-md-3 text-center mb-2">
+                                                      <strong>
+                                                          Изображение
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md-3 text-center mb-2">
+                                                      <strong>
+                                                          Количество
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md-3 text-center mb-2">
+                                                      <strong>
+                                                          Общая цена
+                                                      </strong>
+                                                  </div>
+                                                  <hr>
+                                                  {% for item in order.cart.products.all %}
+                                                  <div class="col-md-3 mb-3 text-center">
+                                                      <strong>
+                                                          <a href="{{ item.content_object.brand.get_absolute_url }}"
+                                                             class="text-decoration-none">
+                                                              {{ item.content_object.brand.name }}
+                                                          </a> -
+                                                          <a href="{{ item.content_object.get_absolute_url }}"
+                                                                    class="text-decoration-none">
+                                                          {{ item.content_object.title }}
+                                                          </a>
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md-3 mb-3 text-center">
+                                                      <img src="{{ item.content_object.photo.url }}" class="img-fluid" style="max-width: 65%">
+                                                  </div>
+                                                  <div class="col-md-3 mb-3 text-center">
+                                                      {{ item.qty }} шт.
+                                                  </div>
+                                                  <div class="col-md-3 mb-3 text-center">
+                                                      {{ item.final_price }} руб.
+                                                  </div>
+                                                  {% endfor %}
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer" style="justify-content: space-between;">
+                                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                  Закрыть
+                                              </button>
+                                              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#orderDetailsPage2-{{ order.id }}">
+                                                  Слудующая
+                                              </button>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal fade" id="orderDetailsPage2-{{ order.id }}" tabindex="-2" aria-labelledby="orderDetailsLabelPage2-{{ order.id }}" aria-hidden="true">
+                                      <div class="modal-dialog modal-xl">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title text-center" id="orderDetailsLabelPage2-{{ order.id }}">
+                                                      Информация о заказе #{{ order.id }} - Страница 2
+                                                  </h5>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body">
+                                              <div class="row">
+                                                  <div class="col-md text-center mb-2">
+                                                      <strong>
+                                                          Имя
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md text-center mb-2">
+                                                      <strong>
+                                                          Фамилия
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md text-center mb-2">
+                                                      <strong>
+                                                          Телефон
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md text-center mb-2">
+                                                      <strong>
+                                                          Способ доставки
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md text-center mb-2">
+                                                      <strong>
+                                                          Адрес
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md text-center mb-2">
+                                                      <strong>
+                                                          Полная сумма покупки
+                                                      </strong>
+                                                  </div>
+                                                  <hr>
+                                                  <div class="col-md mb-3 text-center">
+                                                      <strong>
+                                                          {{ order.first_name }}
+                                                      </strong>
+                                                  </div>
+                                                  <div class="col-md mb-3 text-center">
+                                                      {{ order.last_name }}
+                                                  </div>
+                                                  <div class="col-md mb-3 text-center">
+                                                      {{ order.phone }}
+                                                  </div>
+                                                  <div class="col-md mb-3 text-center">
+                                                      {{ order.get_buying_type_display }}
+                                                  </div>
+                                                  <div class="col-md mb-3 text-center">
+                                                      {{ order.address }}
+                                                  </div>
+                                                  <div class="col-md mb-3 text-center">
+                                                      {{ order.cart.final_price }}
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer" style="justify-content: space-between;">
+                                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                  Закрыть
+                                              </button>
+                                              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#orderDetails-{{ order.id }}">
+                                                  Предыдущая
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  {% else %}
+                      <div style="width: 75%;">
+                            <p>Вы пока не добавили ничего не заказали</p>
+                      </div>
+                  {% endif %}
+              </table>
+          </div>
+          <div class="tab-pane fade" id="list-wishlist" role="tabpanel" aria-labelledby="list-wishlist-list">
+              {% if wishlist %}
+                <div class="row" id="row_sidebar">
+                      {% for product in wishlist %}
+                            {% if not product.content_object.discount %}
+                                <div class="col-md-3" onclick="location.href='{{product.content_object.get_absolute_url}}';" onmouseover="WishList('WishList{{product.content_object.id}}1')" onmouseout="WishListBack('WishList{{product.content_object.id}}1')">
+                                    <div class="product">
+                                        <div class="image">
+                                            <a class="WishList_Source" href="{% url 'remove_from_wishlist' ct_model=product.content_object.ct_model product_slug=product.content_object.slug %}" style="color: black;">
+                                                <svg id="WishList" class="WishList{{product.content_object.id}}1" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 18 18" style="position: absolute; right: 1.6rem; top: 1.6rem;">
+                                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                </svg>
+                                            </a>
+                                            <img class="image_product" id="image_product_sidebar" src="{{product.content_object.photo.url}}">
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <h1>{{product.content_object.title}}</h1>
+                                        <p style="max-width: 100%;; text-align: center;">{{product.content_object.sex}} - {{product.content_object.category}}</p>
+                                        <p style="max-width: 100%;; text-align: center;">{{product.content_object.brand}} {{product.content_object.title}}</p>
+                                        <p>{{product.content_object.price}} руб.</p>
+                                        <!-- Размер товара в избранном
+                                        <div id="size_block">
+                                            {% if product.stock %}
+                                                {% for size in product.size.all %}
+                                                    <div class="col-md" style="text-align: center;"><a id="size_all" style="vertical-align: super;">{{ size }}</a></div>
+                                                {% endfor %}
+                                            {% else %}
+                                                <div class="col-md" style="text-align: center;">
+                                                    <a>
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        -->
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="col-md-3" onclick="location.href='{{product.content_object.get_absolute_url}}';" onmouseover="WishList('WishList{{product.content_object.id}}')" onmouseout="WishListBack('WishList{{product.content_object.id}}')">
+                                    <div class="product">
+                                        <div class="image">
+                                            <a class="WishList_Source" href="{% url 'remove_from_wishlist' ct_model=product.content_object.ct_model product_slug=product.content_object.slug %}" style="color: black;">
+                                                <svg id="WishList" class="WishList{{product.content_object.id}}" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 18 18" style="position: absolute; right: 1.6rem; top: 1.6rem;">
+                                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                </svg>
+                                            </a>
+                                            <img class="image_product" id="image_product_sidebar" src="{{product.content_object.photo.url}}">
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <h1>{{product.content_object.title}}</h1>
+                                        <p style="max-width: 100%;; text-align: center;">{{product.content_object.sex}} - {{product.content_object.category}}</p>
+                                        <p style="max-width: 100%;; text-align: center;">{{product.content_object.brand}} {{product.content_object.title}}</p>
+                                        <p style="max-width: 100%;">
+                                            <strong>
+                                                {{product.content_object.sale_price}} руб.
+                                            </strong>
+                                            <a style="text-decoration: line-through;">
+                                                {{product.content_object.price}} руб.
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                      {% endfor %}
+                </div>
+              {% else %}
+                <div style="width: 75%;">
+                    <p>Вы пока не добавили ничего в Избранное</p>
+                </div>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,104 @@
+{% extends 'mainapp/output/output.html' %}
+
+{% block content %}
+<div id="cart">
+    <h3 class="text-center mt-5 mb-5">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h3>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if cart.products.count %}
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th scope="col">Наименование</th>
+          <th scope="col">Изображение </th>
+          <th scope="col">Цена </th>
+          <th scope="col">Кол-во</th>
+          <th scope="col">Размер</th>
+          <th scope="col">Общая цена</th>
+          <th scope="col">Удалить</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.products.all %}
+        <tr>
+          <th scope="row"><a href="{{item.content_object.get_absolute_url}}" style="color: #232526c9; text-decoration: none;">{{ item.content_object.title }}</a></th>
+          <td class="w-25"><a href="{{item.content_object.get_absolute_url}}"><img src="{{ item.content_object.photo.url }}" class="img-fluid" style="max-width: 70%; height: auto; border-radius: 15px;"></a></td>
+          <td>
+              {% if item.content_object.discount %}
+                  <strong>
+                      {{item.content_object.sale_price}} руб.
+                  </strong>
+                  <a style="text-decoration: line-through;">
+                      {{item.content_object.price}} руб.
+                  </a>
+              {% else %}
+                  {{ item.content_object.price }} руб.
+              {% endif %}</td>
+          <td>
+              <form action="{% url 'change_qty' ct_model=item.content_object.ct_model product_slug=item.content_object.slug product_size=item.size%}" method="POST">
+                  {% csrf_token %}
+                  <input id="input_correct" style="width: 35%; margin: auto; text-align: center;" type="number" class="form-control form-control-sm" name="qty", min="1" value="{{ item.qty }}" onblur="submit();">
+              </form>
+          </td>
+          <td>
+              <form action="{% url 'change_size' ct_model=item.content_object.ct_model product_slug=item.content_object.slug product_size=item.size%}" method="POST">
+                  {% csrf_token %}
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="size" onblur="submit();">
+                      {% if item.content_object.size.all %}
+                          {% for object_size in item.content_object.size.all %}
+                              {% if item.size == object_size.title %}
+                                  <option selected value="{{ object_size }}" class="form-control">
+                                      {{ object_size }}
+                                  </option>
+                              {% else %}
+                                  <option value="{{ object_size }}" class="form-control">
+                                      {{ object_size }}
+                                  </option>
+                              {% endif %}
+                          {% endfor %}
+                      {% endif %}
+                  </select>
+              </form>
+          </td>
+          <td>{{ item.final_price }} руб.</td>
+          <td>
+              <a href="{% url 'remove-from-cart' ct_model=item.content_object.ct_model product_slug=item.content_object.slug product_size=item.size%}">
+                  <button class="btn btn-danger">Удалить из корзины</button>
+              </a>
+          </td>
+        </tr>
+        {% endfor %}
+            <tr>
+              <td colspan="2"></td>
+                <td style="vertical-align: middle;"><strong>Итого: </strong></td>
+                <td style="vertical-align: middle;"><strong>{{cart.total_products }} шт.</strong></td>
+              <td> </td>
+              <td style="vertical-align: middle;"><strong>{{cart.final_price }} руб.</strong></td>
+              <td style="vertical-align: middle;">
+                  <a href="{% url 'making_an_order' %}">
+                      <button class="btn btn-success" style="margin-top: 0vh;"><strong>Оформить заказ</strong></button>
+                  </a>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+    {% else %}
+        <style>
+            .container{
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                max-width: 100%;
+                padding-left: 15%;
+                padding-right: 15%;
+                }
+        </style>
+    {% endif %}
+</div>
+{% endblock %}

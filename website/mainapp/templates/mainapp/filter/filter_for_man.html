@@ -1,0 +1,65 @@
+{% extends 'mainapp/output/output.html' %}
+
+{% block title %}
+    At News (Welcome to the Scott Wattsom)
+{% endblock %}
+
+{% block content %}
+    {% if products %}
+        <div id="background_for_sidebar">
+            <form action="{% url 'filter_for_man' %}" method="get">
+                <div class="dropdown" id="dropdown_user_form">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Бренды
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                        {% for brand in brands_all %}
+                            <li id="dropdownMenuList">
+                                <input class="form-check-input" type="checkbox" value="{{brand.slug}}" id="brand{{brand.id}}" name="brand">
+                                <label class="form-check-label" for="brand{{brand.id}}">
+                                    {{ brand.name }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Категории
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                        {% for category in category_all %}
+                            <li id="dropdownMenuList">
+                                <input class="form-check-input" type="checkbox" value="{{category.slug}}" id="category{{category.id}}" name="category">
+                                <label class="form-check-label" for="category{{category.id}}">
+                                    {{ category.name }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-outline-success" type="submit">Найти</button>
+                </div>
+            </form>
+            <div class="row" id="row_sidebar">
+                {% for product in products %}
+                <div class="col-md-3" onclick="location.href='{{product.get_absolute_url}}';">
+                    <div class="product">
+                        <div class="image">
+                            <img class="image_product" id="image_product_sidebar" src="{{product.photo.url}}">
+                        </div>
+                    </div>
+                    <div class="info">
+                        <h1>{{product.title}}</h1>
+                        <p>{{product.description}}</p>
+                        <p>{{product.price}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div id="info">
+            <div class="infoblockempty">
+                <p>Пока что здесь нету ни одногой вещи</p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    background-color:black;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: white;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+#background{
+    background-color: white;
+    background-position: center;
+    background-size: cover;
+    width:100%;
+    margin-top: 3vh;
+}
+
+#background .content {
+    position: relative;
+    top: -13%;
+}
+
+
+#background .content h1, #background h1{font-size: 35vh dfg; color: black; text-align: center; }
+
+#background .content p, #background p { margin: 20px auto; color: #000000; text-align: center; font-size: 1.8vh}
+
+#background .btn{padding: 1vh; margin-top: 6vh; margin:1px, 50%; width: 10%; font-size: 1.2vh;}
+
+
+#shapka{
+    display: block;
+    float: left;
+    width: 100%;
+    height: 4.5vh;
+    background-color:#1a191996;
+}
+
+#time_cart{
+    display: block;
+}
+
+@media (min-width: 992px){
+    #time_cart{
+        display: none;
+    }
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+            <div class="slider">
+                  {% for product in new_products %}
+                    {% if product.product %}
+                        <div class="item">
+                            NEW
+                            <img src="{{product.product.photo.url}}" class="d-block w-100" onclick="location.href='{{product.product.get_absolute_url}}';">
+                        </div>
+                    {% else %}
+                        <div class="item">
+                            NEW
+                            <img src="{{product.product_accessories.photo.url}}" class="d-block w-100" onclick="location.href='{{product.product_accessories.get_absolute_url}}';">
+                        </div>
+                    {% endif %}
+                  {% endfor %}
+                  <!-- Кнопки-стрелочки -->
+                  <a class="previous" onclick="previousSlide()">&#10094;</a>
+                  <a class="next" onclick="nextSlide()">&#10095;</a>
+            </div>
+            <style>
+                .next, .previous{
+                    -moz-user-select: none;
+                    -webkit-user-select: none;
+                    -ms-user-select: none;
+                    -o-user-select: none;
+                    user-select: none;
+                }
+
+                .slider{
+                    max-width: 90%;
+                    /* Положение элемента устанавливается относительно его исходной позиции: */
+                    position: relative;
+                    /* Центрируем по горизонтали: */
+                    margin: auto;
+                    margin-top: 4vh;
+                    margin-bottom: 4vh;
+                    height: 38vh;
+                    background-color: #f2f2f2;
+                    border-radius: 30px;
+                }
+
+                /* Картинка масштабируется по отношению к родительскому элементу: */
+                .slider .item img {
+                    /* Элемент меняет размер так, чтобы заполнить блок и сохранить пропорции: */
+                    object-fit: contain;
+                    object-position: 50% -20px;
+                    width: 100%;
+                    position: absolute;
+                    height: 38vh;
+                    border-radius: 8px;
+                }
+
+                /* Кнопки назад и вперёд: */
+                .slider .previous, .slider .next {
+                    /* Добавляет курсору иконку, когда тот оказывается над кнопкой: */
+                    cursor: pointer;
+                    /* Положение элемента задаётся относительно границ браузера: */
+                    position: absolute;
+                    top: 50%;
+                    width: auto;
+                    margin-top: -22px;
+                    padding: 16px;
+                    /* Оформление самих кнопок: */
+                    color: #232227;
+                    font-weight: bold;
+                    font-size: 16px;
+                    /* Плавное появление фона при наведении курсора: */
+                    transition: 0.6s ease;
+                    /* Скругление границ: */
+                    border-radius: 0 3px 3px 0;
+                }
+                .slider .next {
+                    right: 0;
+                    border-radius: 3px 0 0 3px;
+                }
+
+                /* При наведении курсора на кнопки добавляем фон кнопок: */
+                .slider .previous:hover,
+                .slider .next:hover {
+                    background-color: rgba(0, 0, 0, 0.2);
+                }
+
+                /* Анимация слайдов: */
+                .slider .item {
+                    animation-name: fade;
+                    animation-duration: 1.5s;
+                    display: block;
+                    position: relative;
+                    margin: auto;
+                    overflow: hidden;
+                    height: 38vh;
+                }
+                @keyframes fade {
+                    /* Устанавливаем и изменяем степень прозрачности: */
+                    from {
+                        opacity: 0.4
+                    }
+                    to {
+                        opacity: 1
+                    }
+                }
+            </style>
+            <script>
+                /* Устанавливаем стартовый индекс слайда по умолчанию: */
+                let slideIndex = 1;
+                /* Вызываем функцию, которая реализована ниже: */
+                showSlides(slideIndex);
+
+                /* Увеличиваем индекс на 1 — показываем следующий слайд: */
+                function nextSlide() {
+                    showSlides(slideIndex += 1);
+                }
+
+                /* Уменьшаем индекс на 1 — показываем предыдущий слайд: */
+                function previousSlide() {
+                    showSlides(slideIndex -= 1);
+                }
+
+                /* Устанавливаем текущий слайд: */
+                function currentSlide(n) {
+                    showSlides(slideIndex = n);
+                }
+
+                /* Функция перелистывания: */
+                function showSlides(n) {
+                    /* Обращаемся к элементам с названием класса "item", то есть к картинкам: */
+                    let slides = document.getElementsByClassName("item");
+
+                    /* Проверяем количество слайдов: */
+                    if (n > slides.length) {
+                      slideIndex = 1
+                    }
+                    if (n < 1) {
+                        slideIndex = slides.length
+                    }
+
+                    /* Проходим по каждому слайду в цикле for: */
+                    for (let slide of slides) {
+                        slide.style.display = "none";
+                    }
+                    /* Делаем элемент блочным: */
+                    slides[slideIndex - 1].style.display = "block";
+                }
+            </script>
+</body>
+</html>

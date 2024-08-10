@@ -1,0 +1,22 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script>
+(function($) {
+    $('#id_discount').on('click', function(){
+        if($('#id_discount').prop('checked')==true){
+            $('#id_sale_price').prop('readonly', false)
+            $('#id_sale_price').val('')
+            $('#id_sale_price').css('background', '#121212')
+        }else{
+            $('#id_sale_price').prop('readonly', true)
+            $('#id_sale_price').val('')
+            $('#id_sale_price').css('background', 'lightgray')
+        }
+    })
+})(django.jQuery);
+
+</script>
+{% endblock %}

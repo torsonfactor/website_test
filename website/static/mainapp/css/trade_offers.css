@@ -1,0 +1,41 @@
+#trade_offers{
+    float: left;
+    width: 100%;
+    height: 80.5vh;
+    overflow-y: scroll;
+    color: white;
+}
+
+#trade_offers::-webkit-scrollbar {
+  width: 0;
+}
+
+#background #trade_offers_button {
+    text-align: center;
+}
+
+#background #trade_offers h1{
+    font-size: 4vh;
+}
+
+#background .features p{
+    font-size: 2vh;
+}
+
+#background .features form input{
+    font-size: 1.7vh;
+}
+
+#background .features{
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    height: 100vh;
+}
+
+#background .features{
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    height: 100vh;
+}

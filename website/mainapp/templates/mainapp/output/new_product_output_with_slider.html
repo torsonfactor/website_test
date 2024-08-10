@@ -1,0 +1,323 @@
+{% extends 'mainapp/output/output.html' %}
+{% block content %}
+    {% if product %}
+        <div id="background_for_sidebar" style="background-color: #f2f2f2;">
+            <!-- Картинки навигации -->
+            {% if product.photo_product1 or product.photo_product2 or product.photo_product3 or product.photo_product4 %}
+                <div class="photo_navigation">
+                    <div class="images_navigation">
+                        <a href="#product_image" class="link_images_navigation" >
+                            <img class="product_image_navigation" src="{{product.photo.url}}">
+                        </a>
+                    </div>
+                    {% if product.photo_product1 %}
+                        <div class="images_navigation">
+                            <a href="#product_image1" class="link_images_navigation" >
+                                <img class="product_image_navigation" src="{{product.photo_product1.url}}">
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if product.photo_product2 %}
+                        <div class="images_navigation">
+                            <a href="#product_image2" class="link_images_navigation" >
+                                <img class="product_image_navigation" src="{{product.photo_product2.url}}">
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if product.photo_product3 %}
+                        <div class="images_navigation">
+                            <a href="#product_image3" class="link_images_navigation" >
+                                <img class="product_image_navigation" src="{{product.photo_product3.url}}">
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if product.photo_product4 %}
+                        <div class="images_navigation">
+                            <a href="#product_image4" class="link_images_navigation" >
+                                <img class="product_image_navigation" src="{{product.photo_product4.url}}">
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <!-- Картинки навигации -->
+            <div id="control">
+                <div class="row" id="row_product_output">
+                    <div class="col-md-6">
+                        <div class="product">
+                            <div class="image">
+                                <a class="magnifier-thumb-wrapper" >
+                                    <img class="image_product" id="product_image" src="{{product.photo.url}}">
+                                </a>
+                                <script>
+                                    if(document.documentElement.clientWidth > 1200) {
+
+                                        document.getElementsByClassName("image_product")[0].style.all="unset";
+                                        document.getElementsByClassName("image_product")[0].style.all="unset";
+                                        document.getElementById("product_image").style.all="unset ";
+
+                                        /*Ширина изображения*/
+                                        document.getElementById("product_image").style.width="552px";
+                                        /*Ширина изображения*/
+
+                                        document.getElementsByClassName("product")[0].style.all="unset";
+                                        document.getElementsByClassName("image")[0].style.all="unset";
+                                        document.getElementsByClassName("product")[0].style.all="unset";
+
+                                        document.getElementsByClassName("image")[0].style.all="unset";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.marginLeft="23.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.marginTop="17.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.marginBottom="17.3%";
+
+                                        var evt = new Event1(),
+                                        m = new Magnifier(evt);
+                                        m.attach({
+                                            thumb: '#product_image',
+                                            large: '{{product.photo.url}}',
+                                            mode: 'inside',
+                                            zoom: 2.5,
+                                            //zoomable: true,
+                                            zoomMin: 2.5,
+                                        });
+                                    }else{
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.all="unset";
+                                    }
+                                </script>
+                            </div>
+                            {% if product.photo_product1 %}
+                            <div class="image">
+                                <a class="magnifier-thumb-wrapper">
+                                    <img class="image_product" id="product_image1" src="{{product.photo_product1.url}}">
+                                </a>
+                                <script>
+                                    if(document.documentElement.clientWidth > 1200) {
+
+                                        /*Ширина изображения*/
+                                        document.getElementById("product_image").style.width="552px";
+                                        /*Ширина изображения*/
+
+                                        document.getElementsByClassName("image")[1].style.all="unset";
+                                        document.getElementsByClassName("image_product")[1].style.all="unset";
+                                        document.getElementById("product_image1").style.all="unset ";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[1].style.marginLeft="23.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[1].style.marginTop="17.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.marginBottom="17.3%";
+
+                                        m1 = new Magnifier(evt);
+                                        m1.attach({
+                                            thumb: '#product_image1',
+                                            large: '{{product.photo_product1.url}}',
+                                            mode: 'inside',
+                                            zoom: 2.5,
+                                            //zoomable: true,
+                                            zoomMin:2.5,
+                                        });
+                                    }else{
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[1].style.all="unset";
+                                    }
+                                </script>
+                            </div>
+                            {% endif %}
+                            {% if product.photo_product2 %}
+                            <div class="image">
+                                <a class="magnifier-thumb-wrapper" >
+                                    <img class="image_product" id="product_image2" src="{{product.photo_product2.url}}">
+                                </a>
+                                <script>
+                                    if(document.documentElement.clientWidth > 1200) {
+
+                                        /*Ширина изображения*/
+                                        document.getElementById("product_image").style.width="552px";
+                                        /*Ширина изображения*/
+
+                                        document.getElementsByClassName("image")[2].style.all="unset";
+                                        document.getElementsByClassName("image_product")[2].style.all="unset";
+                                        document.getElementById("product_image2").style.all="unset ";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[2].style.marginLeft="23.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[2].style.marginTop="17.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.marginBottom="17.3%";
+
+                                        m2 = new Magnifier(evt);
+                                        m2.attach({
+                                            thumb: '#product_image2',
+                                            large: '{{product.photo_product2.url}}',
+                                            mode: 'inside',
+                                            zoom: 2.5,
+                                            //zoomable: true,
+                                            zoomMin:2.5,
+                                        });
+                                    }else{
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[2].style.all="unset";
+                                    }
+                                </script>
+                            </div>
+                            {% endif %}
+                            {% if product.photo_product3 %}
+                            <div class="image">
+                                <a class="magnifier-thumb-wrapper" >
+                                    <img class="image_product" id="product_image3" src="{{product.photo_product3.url}}">
+                                </a>
+                                <script>
+                                    if(document.documentElement.clientWidth > 1200) {
+
+                                        /*Ширина изображения*/
+                                        document.getElementById("product_image").style.width="552px";
+                                        /*Ширина изображения*/
+
+                                        document.getElementsByClassName("image")[3].style.all="unset";
+                                        document.getElementsByClassName("image_product")[3].style.all="unset";
+                                        document.getElementById("product_image3").style.all="unset ";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[3].style.marginLeft="23.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[3].style.marginTop="17.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.marginBottom="17.3%";
+
+                                        m3 = new Magnifier(evt);
+                                        m3.attach({
+                                            thumb: '#product_image3',
+                                            large: '{{product.photo_product3.url}}',
+                                            mode: 'inside',
+                                            zoom: 2.5,
+                                            //zoomable: true,
+                                            zoomMin: 2.5,
+                                        });
+                                    }else{
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[3].style.all="unset";
+                                    }
+                                </script>
+                            </div>
+                            {% endif %}
+                            {% if product.photo_product4 %}
+                            <div class="image">
+                                <a class="magnifier-thumb-wrapper" >
+                                    <img class="image_product" id="product_image4" src="{{product.photo_product3.url}}">
+                                </a>
+                                <script>
+                                    if(document.documentElement.clientWidth > 1200) {
+
+                                        /*Ширина изображения*/
+                                        document.getElementById("product_image").style.width="552px";
+                                        /*Ширина изображения*/
+
+                                        document.getElementsByClassName("image")[4].style.all="unset";
+                                        document.getElementsByClassName("image_product")[4].style.all="unset";
+                                        document.getElementById("product_image4").style.all="unset ";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[4].style.marginLeft="23.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[4].style.marginTop="17.3%";
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[0].style.marginBottom="17.3%";
+
+                                        m4 = new Magnifier(evt);
+                                        m4.attach({
+                                            thumb: '#product_image4',
+                                            large: '{{product.photo_product4.url}}',
+                                            mode: 'inside',
+                                            zoom: 2.5,
+                                            //zoomable: true,
+                                            zoomMin: 2.5,
+                                        });
+                                    }else{
+                                        document.getElementsByClassName("magnifier-thumb-wrapper")[4].style.all="unset";
+                                    }
+                                </script>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info" id="product_info_full">
+                <h1>{{ product.title }}</h1>
+                <p>Описание: {{ product.description }}</p>
+                <p>Slug: {{ product.slug }}</p>
+                {% if product.discount %}
+                    <p>
+                        <strong>
+                            {{product.sale_price}} руб.
+                        </strong>
+                        <a style="text-decoration: line-through;">
+                            {{product.price}} руб.
+                        </a>
+                    </p>
+                {% else %}
+                    <p>Цена: {{ product.price }} руб.</p>
+                {% endif %}
+                <div id="size_block_product">
+                    {% if product.stock %}
+                        {% if product.size.all %}
+                            {% for object_size in product.size.all %}
+                                <div class="col-md" id="col_md_for_product_output" style="text-align: center;">
+                                    <a id="size_all" style="vertical-align: super;">
+                                        <button id="button_for_product_output" onmouseover="changeItem()" onmouseout="rechangeItem()" onclick="location.href='{% url 'add-to-cart' ct_model=product.ct_model product_slug=product.slug product_size=object_size.slug %}';">
+                                                {{object_size}}
+                                        </button>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-md" id="col_md_for_product_output" style="text-align: center;">
+                                <h4>
+                                    Нет в наличии
+                                </h4>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="col-md" id="col_md_for_product_output" style="text-align: center;">
+                            <h3>
+                                Нет в наличии
+                            </h3>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row" id="product_info_media">
+                <div class="col-md-6">
+                    <div class="info" id="product_info" style="text-align: center;">
+                        <h1>{{ product.title }}</h1>
+                        <p>Описание: {{ product.description }}</p>
+                        <p>Slug: {{ product.slug }}</p>
+                        {% if product.discount %}
+                            <p>
+                                <strong>
+                                    {{product.sale_price}} руб.
+                                </strong>
+                                <a style="text-decoration: line-through;">
+                                    {{product.price}} руб.
+                                </a>
+                            </p>
+                        {% else %}
+                            <p>Цена: {{ product.price }} руб.</p>
+                        {% endif %}
+
+                        <div id="size_block_product">
+                            {% if product.stock %}
+                                {% if product.size.all %}
+                                    {% for object_size in product.size.all %}
+                                        <div class="col-md" id="col_md_for_product_output" style="text-align: center;">
+                                            <a id="size_all" style="vertical-align: super;">
+                                                <button id="button_for_product_output" onmouseover="changeItem()" onmouseout="rechangeItem()" onclick="location.href='{% url 'add-to-cart' ct_model=product.ct_model product_slug=product.slug product_size=object_size.slug %}';">
+                                                    {{object_size}}
+                                                </button>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="col-md" id="col_md_for_product_output" style="text-align: center;">
+                                        <h3>
+                                            Нет в наличии
+                                        </h3>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="col-md" id="col_md_for_product_output" style="text-align: center;">
+                                    <h3>
+                                        Нет в наличии
+                                    </h3>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+

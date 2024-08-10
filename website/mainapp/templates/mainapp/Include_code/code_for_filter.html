@@ -1,0 +1,97 @@
+<form action="{% url 'filter_for_man' %}" method="get">
+                <div class="dropdown" id="dropdown_user_form">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Бренды
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict" >
+                        {% for brand in brands_all %}
+                            <li id="dropdownMenuList">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="{{brand.slug}}" id="brand{{brand.id}}" name="brand">
+                                </div>
+                                <div class="ms-1 w-100">
+                                    <label class="form-check-label w-100" for="brand{{brand.id}}">
+                                        {{ brand.name }}
+                                    </label>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Категории
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                        {% for category in category_all %}
+                            <li id="dropdownMenuList">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="{{category.slug}}" id="category{{category.id}}" name="category">
+                                </div>
+                                <div class="ms-1 w-100">
+                                    <label class="form-check-label w-100" for="category{{category.id}}">
+                                        {{ category.name }}
+                                    </label>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-outline-success" type="submit">Найти</button>
+                </div>
+            </form>
+
+
+<form action="{% url 'filter_for_search' search_slug=search_query %}" method="get">
+                        <div class="dropdown" id="dropdown_user_form">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                Бренды
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict" >
+                                {% for brand in brands_all %}
+                                    <li id="dropdownMenuList">
+                                        <div>
+                                            <input class="form-check-input" type="checkbox" value="{{brand.slug}}" id="brand{{brand.id}}" name="brand">
+                                        </div>
+                                        <div class="ms-1 w-100">
+                                            <label class="form-check-label w-100" for="brand{{brand.id}}">
+                                                {{ brand.name }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                Категории
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                                {% for category in category_all %}
+                                    <li id="dropdownMenuList">
+                                        <div>
+                                            <input class="form-check-input" type="checkbox" value="{{category.slug}}" id="category{{category.id}}" name="category">
+                                        </div>
+                                        <div class="ms-1 w-100">
+                                            <label class="form-check-label w-100" for="category{{category.id}}">
+                                                {{ category.name }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                Пол
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                                {% for sex in sex_all %}
+                                    <li id="dropdownMenuList">
+                                        <div>
+                                            <input class="form-check-input" type="checkbox" value="{{sex.slug}}" id="sex{{sex.id}}" name="sex">
+                                        </div>
+                                        <div class="ms-1 w-100">
+                                            <label class="form-check-label" for="sex{{sex.id}}">
+                                                {{ sex.name }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <button class="btn btn-outline-success" type="submit">Найти</button>
+                        </div>
+                    </form>

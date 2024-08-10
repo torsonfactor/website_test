@@ -1,0 +1,36 @@
+#dropdown_user_form{
+    display: flex;
+    /*flex-wrap: wrap;*/
+    justify-content: center;
+    margin-top: 6vh;
+    margin-bottom: 6vh;
+}
+
+#background .btn{
+    margin-top: 1vh;
+    width: 250px;
+    font-size: 1.2vh;
+    border-radius: 25px;
+    height: 5vh;
+    background-color: #f2f2f2;
+    color: black;
+}
+
+#dropdownMenuDict{
+    width: 20%;
+    border-radius: 25px;
+    font-size: 115%;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+#dropdownMenuDict::-webkit-scrollbar {
+  width: 0;
+}
+
+#dropdownMenuList{
+    width: 93%;
+    margin: auto;
+    display: flex;
+    flex-wrap: nowrap;
+}

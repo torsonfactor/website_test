@@ -1,0 +1,108 @@
+{% extends 'mainapp/output/output.html' %}
+    {% block content %}
+        {% if search_query %}
+                <form action="{% url 'filter_for_search'%}" method="get">
+                    <div class="dropdown" id="dropdown_user_form">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Бренды
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                            {% for brand in brands_all %}
+                                <li id="dropdownMenuList">
+                                    <input class="form-check-input" type="checkbox" value="{{brand.slug}}" id="brand{{brand.id}}" name="brand">
+                                    <label class="form-check-label" for="brand{{brand.id}}">
+                                        {{ brand.name }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Категории
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                            {% for category in category_all %}
+                                <li id="dropdownMenuList">
+                                    <input class="form-check-input" type="checkbox" value="{{category.slug}}" id="category{{category.id}}" name="category">
+                                    <label class="form-check-label" for="category{{category.id}}">
+                                        {{ category.name }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Пол
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="dropdownMenuDict">
+                            {% for sex in sex_all %}
+                                <li id="dropdownMenuList">
+                                    <input class="form-check-input" type="checkbox" value="{{sex.slug}}" id="sex{{sex.id}}" name="sex">
+                                    <label class="form-check-label" for="sex{{sex.id}}">
+                                        {{ sex.name }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <button class="btn btn-outline-success" type="submit">Найти</button>
+                    </div>
+                </form>
+                {% if category_filter %}
+                    <div class="row" id="row_sidebar">
+                        {% for category in category_filter %}
+                        <div class="col-md-4" onclick="location.href='';">
+                            <div class="product">
+                                <div class="image">
+                                    <img class="image_product" id="image_product_sidebar" src="">
+                                </div>
+                            </div>
+                            <div class="info">
+                                <h1>{{category.name}}</h1>
+                                <p><a href="">{{category.slug}}</a></p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if set_query == 1 %}
+                    <div class="infoblockempty">
+                         <p>По вашему запросу ничего не найдено</p>
+                    </div>
+                {% endif %}
+                <div id="background_for_sidebar">
+                    {% if brands %}
+                        <div class="row" id="row_sidebar">
+                            {% for brand in brands %}
+                            <div class="col-md-4" onclick="location.href='{% url 'brand_catalog' brand_slug=brand.slug %}';">
+                                <div class="product">
+                                    <div class="image">
+                                        <img class="image_product" id="image_product_sidebar" src="">
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h1>{{brand.name}}</h1>
+                                    <p><a href="{% url 'brand_catalog' brand_slug=brand.slug %}">{{brand.slug}}</a></p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if products %}
+                        <div class="row" id="row_sidebar">
+                            {% for product in products %}
+                            <div class="col-md-4" onclick="location.href='{{product.get_absolute_url}}';">
+                                <div class="product">
+                                    <div class="image">
+                                        <img class="image_product" id="image_product_sidebar" src="{{product.photo.url}}">
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h1>{{product.title}}</h1>
+                                    <p>{{product.description}}</p>
+                                    <p>{{product.price}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+        {% endif %}
+    {% endblock %}
